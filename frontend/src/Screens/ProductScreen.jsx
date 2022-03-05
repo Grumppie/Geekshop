@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Row, Image, ListGroup, Card, Button, Col } from 'react-bootstrap'
+import { Row, Image, ListGroup, Card, Button, Col, Alert, Spinner } from 'react-bootstrap'
 import Rating from '../components/Rating'
-import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
+import { listProductDetails } from '../actions/product.actions'
+import Loader from '../components/Loader'
 // import Products from '../products'
 
 
@@ -10,33 +12,21 @@ import axios from 'axios'
 
 const ProductScreen = ({ match }) => {
     // const product = Products.find(p => p._id === match.params.id)
+    const dispatch = useDispatch()
 
-    const [product, setProduct] = useState()
-    const [loading, setLoading] = useState(false)
+    const productDetails = useSelector(state => state.productDetails)
+    const { loading, error, product } = productDetails
 
     useEffect(() => {
-        fectProduct()
-    }, [])
+        dispatch(listProductDetails(match.params.id))
+    }, [match])
 
-    const fectProduct = async () => {
-
-        try {
-            const { data } = await axios.get(`/api/products/${match.params.id}`)
-            setProduct(data)
-            setLoading(true)
-        } catch (error) {
-            console.log(error)
-        }
-        // when you log data you can see that the data that we need is at 0th index of the data object
-    }
-
-
-    return (
-        <>
-            {loading ? (<><Link to='/' className='btn btn-light my-3'>Go Back</Link><Row>
-                <Col md={6}>
-                    <Image src={product.image} alt={product.name} fluid />
-                </Col>
+    const handleError = () => {
+        return error
+            ? <Alert variant='danger'>error</Alert>
+            : <Row><Col md={6}>
+                <Image src={product.image} alt={product.name} fluid />
+            </Col>
                 <Col md={3}>
                     <ListGroup variant='flush'>
                         <ListGroup.Item>
@@ -84,7 +74,13 @@ const ProductScreen = ({ match }) => {
                         </ListGroup>
                     </Card>
                 </Col>
-            </Row></>) : ''}
+            </Row>
+    }
+
+    return (
+        <>
+            <Link to='/' className='btn btn-light my-3'>Go Back</Link>
+            {loading ? <Loader>LOADING..:P</Loader> : handleError()}
         </>)
 
 }

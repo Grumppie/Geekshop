@@ -3,6 +3,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import connectBD from './config/db.js'
 import productRoutes from './Routes/products.routes.js'
+import { errorHandler, notFound } from './middleware/error.middleware.js'
 
 dotenv.config()
 
@@ -17,7 +18,9 @@ app.get('/', (req, res) => {
 
 app.use('/api/products', productRoutes)
 
+app.use(notFound)
 
+app.use(errorHandler)
 
 
 const port = process.env.PORT || 5000
