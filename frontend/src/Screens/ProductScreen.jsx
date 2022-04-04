@@ -28,6 +28,12 @@ const ProductScreen = ({ history, match }) => {
         history.push(`/cart/${match.params.id}?qty=${qty}`)
     }
 
+
+    const [forLoad, setForceLoad] = useState(true)
+
+    setTimeout(() => setForceLoad(false), 450)
+
+
     const handleError = () => {
         return error
             ? <Alert variant='danger'>error</Alert>
@@ -106,8 +112,8 @@ const ProductScreen = ({ history, match }) => {
 
     return (
         <>
-            <Link to='/' className='btn btn-light my-3'>Go Back</Link>
-            {loading ? <Loader>LOADING..:P</Loader> : handleError()}
+            <Link to='/' className='btn btn-light my-3' style={{ width: 'fit-content' }}>Go Back</Link>
+            {(forLoad || loading) ? <Loader>LOADING..:P</Loader> : handleError()}
         </>)
 
 }
