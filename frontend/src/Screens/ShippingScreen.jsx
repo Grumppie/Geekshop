@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import { Form, Button, Container, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { saveShippingAddress } from '../actions/cart.actions'
+import CheckoutSteps from '../components/CheckoutSteps'
 
 const ShippingScreen = ({ history }) => {
 
     const cart = useSelector(state => state.cart)
     const { shippingAddress } = cart
 
-    const [address, setAddress] = useState(shippingAddress.address)
+    const [address, setAddress] = useState(shippingAddress ? shippingAddress.address : "")
     const [city, setCity] = useState()
     const [postalCode, setPostalCode] = useState()
     const [country, setCountry] = useState()
@@ -23,14 +24,14 @@ const ShippingScreen = ({ history }) => {
             postalCode,
             country
         }))
-        history.push('/payment')
+        history.push('/paymentscreen')
     }
 
     return (
         <Container>
             <Row className='justify-content-md-center'>
                 <Col xs={12} md={6}>
-
+                    <CheckoutSteps step1 step2 />
                     <h1>shipping</h1>
                     <Form onSubmit={handleForm}>
                         <Form.Group controlId='address' className='my-2'>
