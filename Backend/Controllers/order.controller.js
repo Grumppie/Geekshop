@@ -5,7 +5,7 @@ import Order from '../Models/order.model.js'
 // @desc    Create New Order
 // @route   POST /api/orders
 // @access  Private
-const getProducts = expressAsyncHandler(
+export const addOrderItems = expressAsyncHandler(
     async (req, res) => {
         const {
             orderItems, shippingAddress, paymentMethod, itemsPrice, taxPrice, shippingPrice, totalPrice
@@ -21,9 +21,10 @@ const getProducts = expressAsyncHandler(
                 orderItems, user: req.user._id, shippingAddress, paymentMethod, itemsPrice, taxPrice, shippingPrice, totalPrice
             })
 
-            const createdOrder = await Order.save()
+            const createdOrder = await newOrder.save()
             res.status(201).json(createdOrder)
         }
 
     }
 )
+

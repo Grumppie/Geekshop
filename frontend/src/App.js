@@ -20,7 +20,7 @@ function App() {
             <main>
                 <Container>
                     <Route path='/shipping' component={ShippingScreen} />
-                    <Route path='/paymentscreen' component={PaymentScreen} />
+                    <Route path='/payment' component={PaymentScreen} />
                     <Route path='/placeorder' component={PlaceOrderScreen} />
                     <Route path='/login' component={LoginScreen} />
                     <Route path='/register' component={RegisterScreen} />

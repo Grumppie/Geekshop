@@ -24,7 +24,7 @@ const ShippingScreen = ({ history }) => {
             postalCode,
             country
         }))
-        history.push('/paymentscreen')
+        history.push('/payment')
     }
 
     return (
