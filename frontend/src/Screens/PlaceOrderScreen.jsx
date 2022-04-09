@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import CheckoutSteps from '../components/CheckoutSteps'
 import Message from '../components/Message'
 import createOrder from '../actions/order.actions'
+import Loader from '../components/Loader'
 
 const PlaceOrderScreen = ({ history }) => {
 
@@ -24,7 +25,7 @@ const PlaceOrderScreen = ({ history }) => {
     cart.totalPrice = addDecimals(Number(Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)).toFixed(2))
 
     const orderCreate = useSelector(state => state.orderCreate)
-    const { order, error, success } = orderCreate
+    const { order, error, success, loading } = orderCreate
 
     useEffect(() => {
         if (success) {
@@ -46,6 +47,7 @@ const PlaceOrderScreen = ({ history }) => {
 
     return (
         <>
+            {loading && <Loader />}
             <CheckoutSteps step1 step2 step3 step4 />
             <Row>
                 <Col md={8} >
