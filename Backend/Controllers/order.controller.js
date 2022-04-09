@@ -28,3 +28,22 @@ export const addOrderItems = expressAsyncHandler(
     }
 )
 
+// @desc    Fetch single order
+// @route   GET /api/orders/id
+// @access  Private
+export const getOrderById = expressAsyncHandler(
+    async (req, res) => {
+        const id = req.params.id
+
+        const order = await Order.findById(id).populate("user", "name email")
+        if (order) {
+            res.status(200).json(order)
+        } else {
+            res.status(404)
+            throw new Error('order not found')
+        }
+
+    }
+)
+
+
