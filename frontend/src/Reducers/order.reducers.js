@@ -40,9 +40,9 @@ export const orderDetailsReducer = (state = {
                 ...state,
                 loading: true
             }
-        case ORDER_CREATE_SUCCESS:
+        case ORDER_DETAILS_SUCCESS:
             return { loading: false, order: action.payload, success: true }
-        case ORDER_CREATE_FAIL:
+        case ORDER_DETAILS_FAIL:
             return { loading: false, error: action.payload }
         default:
             return state
